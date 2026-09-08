@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Iyonex Automation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{ background:var(--bg-raised); }
+  .admin-bar{
+    background:var(--surface); border-bottom:1px solid var(--line);
+    padding:16px 0; position:sticky; top:0; z-index:10;
+  }
+  .admin-bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .admin-bar img{ height:22px; width:auto; }
+  .admin-bar .title{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.1em; color:var(--text-faint); text-transform:uppercase; padding-left:12px; border-left:1px solid var(--line); margin-left:4px; }
+  .admin-warn{
+    background:#FFF8E6; border-bottom:1px solid #F0DBA0; color:#7A5B10;
+    font-size:0.85rem; padding:12px 0; line-height:1.55;
+  }
+  .admin-tabs{ display:flex; gap:6px; margin:32px 0 24px; border-bottom:1px solid var(--line); }
+  .admin-tab{
+    padding:11px 18px; font-size:0.9rem; font-weight:600; color:var(--text-dim);
+    background:none; border:none; border-bottom:2px solid transparent; cursor:pointer;
+    font-family:var(--font-body);
+  }
+  .admin-tab.active{ color:var(--blue); border-bottom-color:var(--blue); }
+  .admin-panel{ display:none; }
+  .admin-panel.active{ display:block; }
+  .admin-toolbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px; flex-wrap:wrap; }
+  .admin-count{ font-size:0.85rem; color:var(--text-faint); font-family:var(--font-mono); }
+  .admin-empty{
+    border:1px dashed var(--line); padding:48px 24px; text-align:center;
+    color:var(--text-faint); font-size:0.92rem;
+  }
+  .entry-card{ border:1px solid var(--line); background:var(--surface); padding:22px 24px; margin-bottom:14px; }
+  .entry-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:14px; }
+  .entry-date{ font-family:var(--font-mono); font-size:0.72rem; color:var(--text-faint); }
+  .entry-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:12px 24px; }
+  .entry-field dt{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-faint); margin-bottom:3px; }
+  .entry-field dd{ margin:0; font-size:0.92rem; color:var(--text); word-break:break-word; }
+  .entry-delete{
+    background:none; border:1px solid var(--line); color:var(--text-faint);
+    font-size:0.78rem; padding:6px 12px; cursor:pointer; white-space:nowrap;
+  }
+  .entry-delete:hover{ border-color:#C0392B; color:#C0392B; }
+</style>
+</head>
+<body>
+
+  <div class="admin-warn">
+    <div class="wrap">
+      <strong>Demo mode:</strong> this panel only shows submissions saved in <em>this browser</em> (local storage). It does not receive messages from real visitors elsewhere on the internet. Connect a real form backend before relying on this for actual inquiries — see the README.
+    </div>
+  </div>
+
+  <div class="admin-bar">
+    <div class="wrap">
+      <div style="display:flex;align-items:center;">
+        <img src="assets/iyonex-logo.png" alt="Iyonex">
+        <span class="title">Admin</span>
+      </div>
+      <button id="admin-logout" class="btn btn-ghost" style="padding:9px 18px;font-size:0.85rem;">Log Out</button>
+    </div>
+  </div>
+
+  <main class="wrap" style="padding-bottom:80px;">
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="contact">Contact</button>
+      <button class="admin-tab" data-tab="internship">Internship Applications</button>
+      <button class="admin-tab" data-tab="workshop">Workshop Requests</button>
+    </div>
+
+    <div class="admin-panel active" id="panel-contact">
+      <div class="admin-toolbar">
+        <span class="admin-count" id="count-contact">0 submissions</span>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-export="contact" style="padding:8px 16px;font-size:0.82rem;">Export CSV</button>
+          <button class="btn btn-ghost" data-clear="contact" style="padding:8px 16px;font-size:0.82rem;">Clear All</button>
+        </div>
+      </div>
+      <div id="list-contact"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-internship">
+      <div class="admin-toolbar">
+        <span class="admin-count" id="count-internship">0 submissions</span>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-export="internship" style="padding:8px 16px;font-size:0.82rem;">Export CSV</button>
+          <button class="btn btn-ghost" data-clear="internship" style="padding:8px 16px;font-size:0.82rem;">Clear All</button>
+        </div>
+      </div>
+      <div id="list-internship"></div>
+    </div>
+
+    <div class="admin-panel" id="panel-workshop">
+      <div class="admin-toolbar">
+        <span class="admin-count" id="count-workshop">0 submissions</span>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-export="workshop" style="padding:8px 16px;font-size:0.82rem;">Export CSV</button>
+          <button class="btn btn-ghost" data-clear="workshop" style="padding:8px 16px;font-size:0.82rem;">Clear All</button>
+        </div>
+      </div>
+      <div id="list-workshop"></div>
+    </div>
+  </main>
+
+  <script src="js/admin-auth-guard.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

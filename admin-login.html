@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | Iyonex Automation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg-raised); }
+  .admin-card{
+    width:100%; max-width:380px; margin:24px; padding:40px 36px;
+    background:var(--surface); border:1px solid var(--line);
+    box-shadow:0 24px 60px -24px rgba(46,60,90,0.22);
+  }
+  .admin-card img{ height:26px; width:auto; margin-bottom:28px; }
+  .admin-card h1{ font-family:var(--font-display); font-size:1.4rem; font-weight:700; margin-bottom:8px; }
+  .admin-card p.sub{ color:var(--text-dim); font-size:0.9rem; margin-bottom:28px; line-height:1.55; }
+  .admin-error{
+    display:none; background:#FDEDEC; border:1px solid #F3B9B4; color:#9B2C2C;
+    font-size:0.85rem; padding:10px 14px; margin-bottom:18px;
+  }
+  .admin-back{ display:inline-block; margin-top:24px; font-size:0.85rem; color:var(--text-faint); }
+  .admin-back:hover{ color:var(--blue); }
+  .admin-note{
+    max-width:380px; margin:16px 24px 0; font-size:0.76rem; color:var(--text-faint);
+    text-align:center; line-height:1.5;
+  }
+</style>
+</head>
+<body>
+  <div>
+    <div class="admin-card">
+      <img src="assets/iyonex-logo.png" alt="Iyonex">
+      <h1>Admin access</h1>
+      <p class="sub">Restricted to Iyonex Automation staff. Sign in to review form submissions.</p>
+
+      <div class="admin-error" id="admin-error">Incorrect username or password.</div>
+
+      <form id="admin-login-form">
+        <div class="field" style="margin-bottom:16px;">
+          <label for="admin-user">Username</label>
+          <input id="admin-user" name="user" type="text" autocomplete="username" required>
+        </div>
+        <div class="field" style="margin-bottom:24px;">
+          <label for="admin-pass">Password</label>
+          <input id="admin-pass" name="pass" type="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Sign In</button>
+      </form>
+
+      <a href="index.html" class="admin-back">&larr; Back to website</a>
+    </div>
+    <p class="admin-note">This is a lightweight, browser-side access gate for demo/staging use &mdash; not a substitute for real authentication on a production backend. See the README before relying on it for anything sensitive.</p>
+  </div>
+
+  <script src="js/admin-auth.js"></script>
+</body>
+</html>
